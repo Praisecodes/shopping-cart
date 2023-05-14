@@ -1,14 +1,34 @@
-import React from "react";
-import "./addProduct.css";
-import { handleSubmit } from "../../apis/createProduct";
+import React, { useState } from "react";
+import handleSubmit from "../../apis/createProduct";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const AddProduct = () => {
-  const handleSubmitClick = (e) => {
-    handleSubmit(e);
+  //const [dataArrived, setDataArrived] = useState(false);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
+
+  const navigateTo = useNavigate();
+  const handleSubmitClick = async (e) => {
+    try {
+      setButtonDisabled(true);
+
+      const response = await handleSubmit(e);
+      console.log(response);
+      if (response.message.includes("successfully")) {
+        setButtonDisabled(false);
+        setTimeout(() => {
+          navigateTo("/");
+        }, 4000);
+      } else {
+        console.log("An error occured during form submission!");
+      }
+    } catch (error) {
+      setButtonDisabled(false);
+      console.log(error);
+    }
   };
   return (
-    <section className="my-3">
+    <section className="my-3 p-3">
       <h4 className="fw-bold text-capitalize text-center my-md-3 my-5">
         Add new product
       </h4>
@@ -76,6 +96,7 @@ const AddProduct = () => {
             onClick={(e) => {
               handleSubmitClick(e);
             }}
+            disabled={buttonDisabled}
           >
             create
           </button>

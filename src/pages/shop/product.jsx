@@ -1,17 +1,17 @@
 import React, { useContext } from "react";
 import { ShopContext } from "../../context/shop-context";
-export const Product = (props) => {
-  const { id, productName, price, productImage } = props.data;
+import { Form } from "react-bootstrap";
+
+export const Product = ({ id, productName, productPrice, productImage, productDescription  }) => {
+
   const { itemsArray } = useContext(ShopContext);
-  
+
   const handleChange = (e) => {
     if (e.target.checked) {
       itemsArray.push(id);
-      console.log(itemsArray);
     } else {
       let arrToRemoveIndex = itemsArray.indexOf(id);
       arrToRemoveIndex > -1 && itemsArray.splice(arrToRemoveIndex, 1);
-      console.log(itemsArray);
     }
   };
   return (
@@ -19,11 +19,12 @@ export const Product = (props) => {
       className="product-container d-flex align-items-center justify-content-around flex-column"
       key={id}
     >
-      <input
+      <Form.Check
         type="checkbox"
         name="user_selection"
         onChange={(e) => handleChange(e)}
       />
+      <p>{id}</p>
       <img
         src={productImage}
         alt="product"
@@ -31,11 +32,13 @@ export const Product = (props) => {
         width="400"
         height="400"
       />
-      <div className="description">
+      <div className="description w-100 d-flex align-items-center justify-content-around flex-column">
         <p>
           <b className="small">{productName}</b>
-        </p>
-        <p className="small"> ${price}</p>
+        </p> 
+        
+          <span className="small">{productDescription} </span>
+        <p className="small fw-bold py-1 text-start"> ${productPrice}</p>
       </div>
     </div>
   );
