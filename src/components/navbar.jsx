@@ -8,7 +8,7 @@ import "./navbar.css";
 
 const AppNav = () => {
   return (
-    <Navbar bg="light" expand="lg" className="shadow">
+    <Navbar bg="light" expand="sm" className="shadow">
       <Container>
         <Navbar.Brand>
           <Link

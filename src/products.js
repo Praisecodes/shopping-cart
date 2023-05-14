@@ -6,6 +6,7 @@ import product5 from "./assets/products/5.png";
 import product6 from "./assets/products/6.webp";
 import product7 from "./assets/products/7.webp";
 import product8 from "./assets/products/8.webp";
+import product9 from "./assets/products/9.webp";
 
 export const PRODUCTS = [
   {
@@ -56,4 +57,5 @@ export const PRODUCTS = [
     price: 40.0,
     productImage: product8,
   },
+  { id: 9, productName: "Mouse", price: 999.0, productImage: product9 },
 ];

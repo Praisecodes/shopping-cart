@@ -51,3 +51,14 @@
   color: white;
   cursor: pointer;
 }
+
+
+.carousel-item img {
+  height: 200px; 
+  object-fit: cover; 
+}
+
+.image-card-container{
+	height:300px;
+	
+}

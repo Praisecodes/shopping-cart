@@ -1,18 +1,19 @@
 import React from "react";
 import "./addProduct.css";
 import { handleSubmit } from "../../apis/createProduct";
+import { Link } from "react-router-dom";
 
 const AddProduct = () => {
   const handleSubmitClick = (e) => {
     handleSubmit(e);
   };
   return (
-    <section className="m-3">
-      <h4 className="fw-bold text-capitalize text-center my-3">
+    <section className="my-3">
+      <h4 className="fw-bold text-capitalize text-center my-md-3 my-5">
         Add new product
       </h4>
       <form
-        className="w-75 m-auto"
+        className="width-toggle-2 m-auto"
         id="form"
         method="POST"
         onSubmit={(e) => handleSubmitClick(e)}
@@ -68,7 +69,7 @@ const AddProduct = () => {
           />
         </section>
 
-        <section className="my-4">
+        <section className="my-4 d-flex align-items-center justify-content-between">
           <button
             type="submit"
             className="btn btn-primary text-capitalize"
@@ -76,7 +77,21 @@ const AddProduct = () => {
               handleSubmitClick(e);
             }}
           >
-            add product
+            create
+          </button>
+
+          <button
+            className="btn btn-danger text-capitalize"
+            onClick={(e) => {
+              handleSubmitClick(e);
+            }}
+          >
+            <Link
+              to="/"
+              className="text-decoration-none text-light text-capitalize"
+            >
+              Cancel
+            </Link>
           </button>
         </section>
       </form>

@@ -1,20 +1,40 @@
-import React from "react";
+import React, { useContext } from "react";
 import { PRODUCTS } from "../../products";
 import { Product } from "./product";
-import "./shop.css";
+import { ShopContext } from "../../context/shop-context";
+import $ from "jquery";
+
 
 export const Shop = () => {
+  const { itemsArray } = useContext(ShopContext);
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    
+   
+  };
   return (
-    <div className="shop">
-      <div className="shopTitle">
-        <h1>Olawale's Shop</h1>
+    <form
+      className="shop"
+      method="POST"
+      id="allProductForm"
+      onSubmit={(e) => handleClick(e)}
+    >
+      <div className="shopTitle d-flex align-items-center justify-content-end p-2 my-3">
+        <button
+          type="submit"
+          className="btn btn-danger text-capitalize"
+          onClick={(e) => handleClick(e)}
+        >
+          delete [1]
+        </button>
       </div>
 
-      <div className="products">
+      <div className="all-products-container row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         {PRODUCTS.map((product) => (
-          <Product data={product} />
+          <Product data={product} key={product.id} />
         ))}
       </div>
-    </div>
+    </form>
   );
 };
