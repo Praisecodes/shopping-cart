@@ -1,4 +1,5 @@
 import React from "react";
+import "./addProduct.css";
 import { handleSubmit } from "../../apis/createProduct";
 
 const AddProduct = () => {
@@ -7,7 +8,9 @@ const AddProduct = () => {
   };
   return (
     <section className="m-3">
-      <h4 className="fw-bold text-capitalize text-center">Add new product</h4>
+      <h4 className="fw-bold text-capitalize text-center my-3">
+        Add new product
+      </h4>
       <form
         className="w-75 m-auto"
         id="form"
@@ -67,6 +70,7 @@ const AddProduct = () => {
 
         <section className="my-4">
           <button
+            type="submit"
             className="btn btn-primary text-capitalize"
             onClick={(e) => {
               handleSubmitClick(e);
