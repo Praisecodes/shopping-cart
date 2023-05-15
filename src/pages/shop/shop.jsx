@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import handleProductDelete from "../../apis/deleteProduct";
 import listAllProducts from "../../apis/listAllProducts";
 import Spinner from "react-bootstrap/Spinner";
+import Swal from "sweetalert2";
 
 export const Shop = () => {
   const { itemsArray } = useContext(ShopContext);
@@ -19,12 +20,25 @@ export const Shop = () => {
       try {
         /*remove the selected products from the database*/
         const response = await handleProductDelete(item);
-        console.log(response);
-
         /*remove the selected items from the DOM*/
+        if (response.message.includes("successfully")) {
+          Swal.fire({
+            title: "Deleted",
+            icon: "success",
+            text: "Product deleted successfully",
+          });
+        } else {
+          Swal.fire({
+            title: "Error",
+            text: "An error occured while deleting product!",
+          });
+        }
         itemsArray.splice(index, 1);
       } catch (error) {
-        console.log(error);
+        Swal.fire({
+          title: "Error",
+          text: "An error occured while deleting product!",
+        });
       }
     });
   };
@@ -43,7 +57,13 @@ export const Shop = () => {
   const products =
     allProducts &&
     allProducts?.data.map((product, index) => {
-      const { id, product_image, product_name, product_price, product_description } = product;
+      const {
+        id,
+        product_image,
+        product_name,
+        product_price,
+        product_description,
+      } = product;
 
       return (
         <Product
@@ -91,7 +111,7 @@ export const Shop = () => {
             <Spinner animation="border" variant="secondary" />
           </div>
         ) : dataFound ? (
-          products 
+          products
         ) : (
           <span className="text-center my-5 py-3">No Products Found!</span>
         )}

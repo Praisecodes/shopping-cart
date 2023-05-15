@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import handleSubmit from "../../apis/createProduct";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const AddProduct = () => {
-  //const [dataArrived, setDataArrived] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(false);
 
   const navigateTo = useNavigate();
@@ -18,13 +18,19 @@ const AddProduct = () => {
         setButtonDisabled(false);
         setTimeout(() => {
           navigateTo("/");
-        }, 4000);
+        }, 2000);
       } else {
-        console.log("An error occured during form submission!");
+        Swal.fire({
+          title: "Error",
+          text: "An error occured while creating product!",
+        });
       }
     } catch (error) {
       setButtonDisabled(false);
-      console.log(error);
+      Swal.fire({
+        title: "Error",
+        text: "An error occured while creating product!",
+      });
     }
   };
   return (
