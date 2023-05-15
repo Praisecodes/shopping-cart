@@ -13,7 +13,6 @@ const AddProduct = () => {
       setButtonDisabled(true);
 
       const response = await handleSubmit(e);
-      console.log(response);
       if (response.message.includes("successfully")) {
         setButtonDisabled(false);
         setTimeout(() => {
