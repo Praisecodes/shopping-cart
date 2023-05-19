@@ -102,7 +102,7 @@ export default function AddProduct() {
             onChange={(e) => handleFormTypeToggle(e)}
             className="my-2"
           >
-            <Form.Select size="sm">
+            <Form.Select size="sm" name="product_type" required>
               <option value="NULL">SELECT</option>
               <option value="0">DVD </option>
               <option value="1">Furniture</option>
@@ -113,16 +113,6 @@ export default function AddProduct() {
 
         <section className="product-description-container">
           {formToRender && formToRender}
-        </section>
-
-        <section className="my-4">
-          <input
-            type="file"
-            placeholder="Product image"
-            className="form-control"
-            name="product_image"
-            required
-          />
         </section>
 
         <section className="my-4 d-flex align-items-center justify-content-between">
