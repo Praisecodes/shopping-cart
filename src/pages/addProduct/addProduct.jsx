@@ -4,9 +4,8 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
-const AddProduct = () => {
+export default function AddProduct() {
   const [buttonDisabled, setButtonDisabled] = useState(false);
-
   const navigateTo = useNavigate();
   const handleSubmitClick = async (e) => {
     try {
@@ -32,6 +31,7 @@ const AddProduct = () => {
       });
     }
   };
+
   return (
     <section className="my-3 p-3">
       <h4 className="fw-bold text-capitalize text-center my-md-3 my-5">
@@ -57,20 +57,6 @@ const AddProduct = () => {
         </section>
 
         <section>
-          <label htmlFor="product_description" className="my-2">
-            Product description
-          </label>
-
-          <input
-            type="text"
-            placeholder="Product description"
-            className="form-control"
-            name="product_description"
-            required
-          />
-        </section>
-
-        <section>
           <label htmlFor="product_price" className="my-2">
             Product price
           </label>
@@ -80,6 +66,20 @@ const AddProduct = () => {
             placeholder="Product price"
             className="form-control"
             name="product_price"
+            required
+          />
+        </section>
+
+        <section>
+          <label htmlFor="product_description" className="my-2">
+            Product description
+          </label>
+
+          <input
+            type="text"
+            placeholder="Product description"
+            className="form-control"
+            name="product_description"
             required
           />
         </section>
@@ -123,6 +123,4 @@ const AddProduct = () => {
       </form>
     </section>
   );
-};
-
-export default AddProduct;
+}
