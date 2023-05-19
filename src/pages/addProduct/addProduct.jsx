@@ -3,6 +3,12 @@ import handleSubmit from "../../apis/createProduct";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { Form } from "react-bootstrap";
+import {
+  DVDFormDescription,
+  BookFormDescription,
+  FurnitureFormDescription,
+} from "./formSwitchers";
 
 export default function AddProduct() {
   const [buttonDisabled, setButtonDisabled] = useState(false);
@@ -29,6 +35,23 @@ export default function AddProduct() {
         title: "Error",
         text: "An error occured while creating product!",
       });
+    }
+  };
+
+  const differentFormArray = [
+    DVDFormDescription,
+    FurnitureFormDescription,
+    BookFormDescription,
+  ];
+  const [formToRender, setFormToRender] = useState(
+    <React.Fragment></React.Fragment>
+  );
+
+  const handleFormTypeToggle = (e) => {
+    for (let i = 0; i < differentFormArray.length; i++) {
+      if (parseInt(e.target.value) === i) {
+        setFormToRender(differentFormArray[i]);
+      }
     }
   };
 
@@ -70,21 +93,29 @@ export default function AddProduct() {
           />
         </section>
 
-        <section>
-          <label htmlFor="product_description" className="my-2">
-            Product description
+        <section className="form-switcher my-2" id="productType">
+          <label htmlFor="type_switcher" className="my-2 fw-bold">
+            Type Switcher
           </label>
-
-          <input
-            type="text"
-            placeholder="Product description"
-            className="form-control"
-            name="product_description"
-            required
-          />
+          <Form.Group
+            controlId="prouctType"
+            onChange={(e) => handleFormTypeToggle(e)}
+            className="my-2"
+          >
+            <Form.Select size="sm">
+              <option value="NULL">SELECT</option>
+              <option value="0">DVD </option>
+              <option value="1">Furniture</option>
+              <option value="2">Book</option>
+            </Form.Select>
+          </Form.Group>
         </section>
 
-        <section className="my-3">
+        <section className="product-description-container">
+          {formToRender && formToRender}
+        </section>
+
+        <section className="my-4">
           <input
             type="file"
             placeholder="Product image"
