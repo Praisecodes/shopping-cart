@@ -52,13 +52,15 @@
   cursor: pointer;
 }
 
-
 .carousel-item img {
-  height: 200px; 
-  object-fit: cover; 
+  height: 200px;
+  object-fit: cover;
 }
 
-.image-card-container{
-	height:300px;
-	
+.image-card-container {
+  height: 300px;
+}
+.product-container {
+  border: 1px solid #000 !important;
+  width: 300px;
 }

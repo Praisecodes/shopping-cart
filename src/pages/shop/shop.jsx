@@ -10,59 +10,78 @@ import Swal from "sweetalert2";
 export const Shop = () => {
   const { itemsArray } = useContext(ShopContext);
   const [dataArrived, setDataArrived] = useState(false);
-  const [allProducts, setAllProducts] = useState();
-  const [dataFound, setDataFound] = useState();
+  const [allProducts, setAllProducts] = useState([]);
+  const [dataFound, setDataFound] = useState(false);
 
-  const handleClick = (e) => {
+  const handleClick = async (e) => {
     e.preventDefault();
 
-    itemsArray.forEach(async (item, index) => {
-      try {
-        /*remove the selected products from the database*/
+    try {
+      const deletePromises = itemsArray.map(async (item) => {
         const response = await handleProductDelete(item);
-        /*remove the selected items from the DOM*/
         if (response.message.includes("successfully")) {
           Swal.fire({
             title: "Deleted",
             icon: "success",
             text: "Product deleted successfully",
           });
+          return true;
         } else {
           Swal.fire({
             title: "Error",
-            text: "An error occured while deleting product!",
+            text: "An error occurred while deleting product!",
           });
+          return false;
         }
-        itemsArray.splice(index, 1);
-      } catch (error) {
-        Swal.fire({
-          title: "Error",
-          text: "An error occured while deleting product!",
-        });
+      });
+
+      const deleteResults = await Promise.all(deletePromises);
+
+      if (deleteResults.includes(true)) {
+        const updatedProducts = await listAllProducts();
+        setAllProducts(updatedProducts.data);
       }
-    });
+    } catch (error) {
+      // Swal.fire({
+      //   title: "Error",
+      //   text: "An error occurred while deleting product!",
+      // });
+      console.log(error);
+    }
   };
 
   useEffect(() => {
-    const response = async () => {
-      const data = await listAllProducts();
-      setDataArrived(true);
-      data.data.length > 0 ? setDataFound(true) : setDataFound(false);
-      setAllProducts(data);
+    const fetchProducts = async () => {
+      try {
+        const data = await listAllProducts();
+        setDataArrived(true);
+        setDataFound(data.data.length > 0);
+        setAllProducts(data.data);
+      } catch (error) {
+        Swal.fire({
+          title: "Error",
+          text: "An error occurred while fetching products!",
+        });
+        console.log(error);
+      }
     };
 
-    response();
+    fetchProducts();
   });
 
   const products =
     allProducts &&
-    allProducts?.data.map((product, index) => {
+    allProducts.map((product, index) => {
       const {
         id,
-        product_image,
         product_name,
         product_price,
-        product_description,
+        product_type,
+        product_size,
+        product_height,
+        product_width,
+        product_length,
+        product_weight,
       } = product;
 
       return (
@@ -71,8 +90,12 @@ export const Shop = () => {
           id={id}
           productName={product_name}
           productPrice={product_price}
-          productImage={product_image}
-          productDescription={product_description}
+          productType={product_type}
+          productHeight={product_height}
+          productWidth={product_width}
+          productLength={product_length}
+          productSize={product_size}
+          productWeight={product_weight}
         />
       );
     });
@@ -86,13 +109,24 @@ export const Shop = () => {
     >
       <div className="shopTitle d-flex align-items-center justify-content-end p-2 my-3">
         {dataFound ? (
-          <button
-            type="submit"
-            className="btn btn-danger text-capitalize"
-            onClick={(e) => handleClick(e)}
-          >
-            delete
-          </button>
+          <div className="d-flex align-items-center justify-content-end p-2 my-3">
+            <button
+              type="submit"
+              className="btn btn-danger text-capitalize mx-2"
+              onClick={(e) => handleClick(e)}
+            >
+              mass delete
+            </button>
+
+            <button
+              className="btn btn-primary text-capitalize mx-2"
+              onClick={(e) => handleClick(e)}
+            >
+              <Link to="/create" className="text-decoration-none text-light">
+                create
+              </Link>
+            </button>
+          </div>
         ) : (
           <button
             className="btn btn-primary text-capitalize"
@@ -105,7 +139,7 @@ export const Shop = () => {
         )}
       </div>
 
-      <div className="all-products-container row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      <div className="all-products-container d-flex align-items-center flex-md-row justify-content-around flex-column">
         {!dataArrived ? (
           <div className="my-5 p-5 d-flex align-items-center justify-content-center m-auto">
             <Spinner animation="border" variant="secondary" />
