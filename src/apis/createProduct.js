@@ -7,7 +7,7 @@ const handleSubmit = (e) => {
 
   return $.ajax({
     type: "POST",
-    url: `${process.env.REACT_APP_API}/create`,
+    url: `${process.env.REACT_APP_API_URL}/create`,
     data: formData,
     cache: false,
     contentType: false,
