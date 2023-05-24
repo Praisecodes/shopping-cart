@@ -18,7 +18,7 @@ export const Shop = () => {
 
     try {
       const deletePromises = itemsArray.map(async (item) => {
-        const response = await handleProductDelete(item);
+        const response = await handleProductDelete(item); 
         if (response.message.includes("successfully")) {
           Swal.fire({
             title: "Deleted",
